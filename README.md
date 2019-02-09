@@ -8,6 +8,6 @@ Use *WindowsAPICodePack* and matching *...Shell* to create Windows Libraries, in
 
 Unsure how to set
 1. Icon using IconResourceId property.
-1. Public Save Location as well.
+1. Public Save Location as property isn't exposed.
 
 *Consider these limitations and set manually using the UI*
