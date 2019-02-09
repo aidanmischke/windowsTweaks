@@ -1,11 +1,13 @@
-# windowsTweaks
-Windows tweaks made after a clean install
+# Windows Tweaks
+Windows tweaks made after a clean Windows 10 install
 
 ## Create Windows Libraries
-Use *WindowsAPICodePack* and matching *...Shell* to create Windows Libraries, include folders, set DefaultSaveFolder location, and set the LibraryType: Generic, Documents, Music, Pictures, Videos.
+Use *WindowsAPICodePack* and matching *...Shell* to create Windows Libraries, include folders, set DefaultSaveFolder location, and set the LibraryType: *Generic, Documents, Music, Pictures, Videos.*
 
-###Got stuck on...
-Unsure how to 
-1. set the icon using IconResourceId property.
-1. set the Public Save Location as well.
+### Things I Got stuck on...
+
+Unsure how to set
+1. Icon using IconResourceId property.
+1. Public Save Location as well.
+
 *Consider these limitations and set manually using the UI*
