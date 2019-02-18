@@ -6,7 +6,10 @@ Use *WindowsAPICodePack* and matching *...Shell* to create Windows Libraries, in
 
 ## How to run
 *I'm unsure why right clicking the PowerShell file and clicking "Run with PowerShell" returns the following error:*
-```string is missing the terminator: "```
+
+```$lib.LibraryType = "$($gamesLibraryType)"
+
+string is missing the terminator: "```
 
 ### Workaround
 1. In the directory with the .dll files, (shift + right click) and "Open PowerShell window here".
