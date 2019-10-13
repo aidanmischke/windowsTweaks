@@ -21,6 +21,7 @@ $mp3LibraryType = "Music"
 $picturesPath = "$($onExternalDrivePath)"
 $videosPath = "E:\"
 $videoVaultPath = "$($onExternalDrivePath)\_Video Vault"
+$videoForToshPath = "($videosPath)Videos\__On Tachi\Videos for tosh"
 
 $applicationsPath = "$($onExternalDrivePath)"
 $downloadsPath = "C:\Users\$($userAccount)\Downloads"
@@ -93,6 +94,7 @@ $lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_
 
 $lib.Add("$($videosPath)\$($libName)")
 $lib.Add("$($videoVaultPath)")
+$lib.Add("$($videoForToshPath)")
 $lib.Add("C:\Users\$($userAccount)\$($libName)")
 $lib.Add("C:\Users\Public\$($libName)")
 
