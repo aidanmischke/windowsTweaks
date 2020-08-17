@@ -1,135 +1,304 @@
-#Note Limitations: need to manually set in UI
+#Note Limitations: 
+#Need to manually set in UI
 	#library icons
 	#public save location
+#Recommend library names differ to default library names
+	#i.e. underscore prefix
+	#They don't reliablely create with default names and 
+	#Windows keeps re-adding default Windows library names after updates
 
-#LibraryType values
+#libType values
 #"Generic"
 #"Documents"
 #"Music"
 #"Pictures"
 #"Videos"
 
+#Helper lines to query libraries https://blogs.technet.microsoft.com/heyscriptingguy/2012/11/11/weekend-scripter-working-with-windows-libraries/
+#Add-type -path Microsoft.WindowsAPICodePack.Shell.dll
+#[Microsoft.WindowsAPICodePack.Shell.KnownFolders]::Libraries | Select-Object Name,ParsingName
+#$doc = [Microsoft.WindowsAPICodePack.Shell.ShellLibrary]::Load("Documents", $false)
+#Select-Object –InputObject $doc –Property Name, Count, DefaultSaveFolder, LibraryType
+
 Add-type -path Microsoft.WindowsAPICodePack.Shell.dll
 
-$onExternalDrivePath = "F:\__On 931"
-
+#Create different libraries depending on user account
 $userAccount = "Enny"
-$documentsPath = "F:\__NOT On Mini Backup"
-$musicPath = "$($onExternalDrivePath)"
-$mp3Path = "E:\mp3"
-$mp3LibraryType = "Music"
-$picturesPath = "$($onExternalDrivePath)"
-$videosPath = "E:\"
-$videoVaultPath = "$($onExternalDrivePath)\_Video Vault"
-$videoForToshPath = "($videosPath)Videos\__On Tachi\Videos for tosh"
+#$userAccount = "tosh"
 
-$applicationsPath = "$($onExternalDrivePath)"
-$downloadsPath = "C:\Users\$($userAccount)\Downloads"
-$applicationsLibraryType = "Generic"
-$gamesPath = "E:\"
-$steamPath = "D:\Steam\steamapps\common"
-$gamesLibraryType = "Generic"
+$libNamePrefix = "_"
 
-$libName = "Documents"
+if ("$($userAccount)" -eq "Enny")
+{
+	#Custom Library
+	$libName = "Applications"
+	$libType = "Generic"
+	$libPath1 = "F:\__Jumbo Applications [original] backed up to Tachi and Sammy"
+	$libPath2 = "E:\Downloads"
+	#$libPath3 = "C:\Users\$($userAccount)\Downloads"
 
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	#$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.Add("$($documentsPath)\$($libName)")
-$lib.Add("C:\Users\$($userAccount)\$($libName)")
-$lib.Add("C:\Users\Public\$($libName)")
+	#Custom Library
+	$libName = "Cloud"
+	$libType = "Generic"
+	$libPath1 = "E:\Google Drive"
+	$libPath2 = "E:\Dropbox"
+	$libPath3 = "E:\OneDrive"
 
-$lib.DefaultSaveFolder = "$($documentsPath)\$($libName)"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.LibraryType = "$($libName)"
+	#Custom Library
+	$libName = "Code"
+	$libType = "Generic"
+	$libPath1 = "E:\__Cuda Code [original] backed up to Tiny"
 
-$lib.Close()
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Close()
 
+	#Default Library
+	$libName = "Documents"
+	$libType = "$($libName)"
+	$libPath1 = "F:\__Jumbo Documents [original] backed up to Tiny"
+	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath3 = "C:\Users\Public\$($libName)"
 
-$libName = "Music"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
+	
+	#Custom Library
+	$libName = "Downloads"
+	$libType = "Generic"
+	$libPath1 = "E:\Downloads"
+	$libPath2 = "E:\Soulseek Downloads"
+	#$libPath3 = "C:\Users\$($userAccount)\Downloads"
 
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	#$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.Add("$($musicPath)\$($libName)")
-$lib.Add("C:\Users\$($userAccount)\$($libName)")
-$lib.Add("C:\Users\Public\$($libName)")
+	#Custom Library
+	$libName = "Games"
+	$libType = "Generic"
+	$libPath1 = "F:\__Jumbo Games [original] backed up to Bitachi"
+	$libPath2 = "D:\Steam\steamapps\common"
+	$libPath3 = "D:\Program Files"
+	$libPath4 = "D:\Program Files (x86)"
+	$libPath5 = "C:\Users\$($userAccount)\Documents"
 
-$lib.DefaultSaveFolder = "$($musicPath)\$($libName)"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Add("$($libPath4)")
+	$lib.Add("$($libPath5)")
+	$lib.Close()
 
-$lib.LibraryType = "$($libName)"
+	#Custom Library
+	$libName = "mp3"
+	$libType = "Music"
+	$libPath1 = "E:\__Cuda mp3 [original] backed up to Tachi"
 
-$lib.Close()
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Close()
 
+	#Default Library
+	$libName = "Music"
+	$libType = "$($libName)"
+	$libPath1 = "F:\__Jumbo Music [original] backed up to Tiny"
+	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath3 = "C:\Users\Public\$($libName)"
 
-$libName = "mp3"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
+	#Default Library
+	$libName = "Pictures"
+	$libType = "$($libName)"
+	$libPath1 = "F:\__Jumbo Aidan's Pictures [original] backed up to Tachi"
+	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath3 = "C:\Users\Public\$($libName)"
 
-$lib.Add("$($mp3Path)")
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.DefaultSaveFolder = "$($mp3Path)"
+	#Custom Library
+	$libName = "Program Files"
+	$libType = "Generic"
+	$libPath1 = "C:\Program Files"
+	$libPath2 = "C:\Program Files (x86)"
+	$libPath3 = "D:\Program Files"
+	$libPath4 = "D:\Program Files (x86)"
+	
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Add("$($libPath4)")
+	$lib.Close()
 
-$lib.LibraryType = "$($mp3LibraryType)"
+	#Default Library
+	$libName = "Videos"
+	$libType = "$($libName)"
+	$libPath1 = "F:\__Jumbo Video Vault [original] backed up to Tachi"
+	$libPath2 = "F:\__Jumbo Videos [original] backed up to Shiba"
+	$libPath3 = "F:\__Jumbo Videos 1900-1989 [original] backed up to Tiny"
+	$libPath4 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath5 = "C:\Users\Public\$($libName)"
 
-$lib.Close()
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Add("$($libPath4)")
+	$lib.Add("$($libPath5)")
+	$lib.Close()
+}
+if ("$($userAccount)" -eq "tosh")
+{
+	#Custom Library
+	$libName = "Applications"
+	$libType = "Generic"
+	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Applications"
+	$libPath2 = "C:\Users\$($userAccount)\Downloads"
 
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Close()
 
-$libName = "Pictures"
+	#Custom Library
+	$libName = "Cloud"
+	$libType = "Generic"
+	$libPath1 = "C:\Users\tosh\Google Drive"
+	$libPath2 = "C:\Users\tosh\Dropbox"
+	$libPath3 = "C:\Users\tosh\OneDrive"
 
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.Add("$($picturesPath)\$($libName)")
-$lib.Add("C:\Users\$($userAccount)\$($libName)")
-$lib.Add("C:\Users\Public\$($libName)")
+	#Default Library
+	$libName = "Documents"
+	$libType = "$($libName)"
+	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Documents"
+	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath3 = "C:\Users\Public\$($libName)"
 
-$lib.DefaultSaveFolder = "$($picturesPath)\$($libName)"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
+	
+	#Custom Library
+	$libName = "Downloads"
+	$libType = "Generic"
+	$libPath1 = "C:\Users\$($userAccount)\Downloads"
+	$libPath2 = "D:\Soulseek Downloads"
 
-$lib.LibraryType = "$($libName)"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Close()
 
-$lib.Close()
+	#Custom Library
+	$libName = "Games"
+	$libType = "Generic"
+	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Emulators"
+	$libPath2 = "D:\__Tosh Cargo [original] backed up to Sammy\Frets On Fire"
 
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Close()
 
-$libName = "Videos"
+	#Default Library
+	$libName = "Music"
+	$libType = "$($libName)"
+	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Music"
+	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath3 = "C:\Users\Public\$($libName)"
 
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.Add("$($videosPath)\$($libName)")
-$lib.Add("$($videoVaultPath)")
-$lib.Add("$($videoForToshPath)")
-$lib.Add("C:\Users\$($userAccount)\$($libName)")
-$lib.Add("C:\Users\Public\$($libName)")
+	#Default Library
+	$libName = "Pictures"
+	$libType = "$($libName)"
+	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Pictures"
+	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath3 = "C:\Users\Public\$($libName)"
 
-$lib.DefaultSaveFolder = "$($videosPath)\$($libName)"
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Close()
 
-$lib.LibraryType = "$($libName)"
+	#Custom Library
+	$libName = "Program Files"
+	$libType = "Generic"
+	$libPath1 = "C:\Program Files"
+	$libPath2 = "C:\Program Files (x86)"
+	
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Add("$($libPath2)")
+	$lib.Close()
 
-$lib.Close()
+	#Default Library
+	$libName = "Videos"
+	$libType = "$($libName)"
+	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Videos"
 
-
-
-$libName = "Applications"
-
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
-
-$lib.Add("$($applicationsPath)\$($libName)")
-$lib.Add("$downloadsPath")
-
-$lib.DefaultSaveFolder = "$($applicationsPath)\$($libName)"
-
-$lib.LibraryType = "$($applicationsLibraryType)"
-
-$lib.Close()
-
-
-
-$libName = "Games"
-
-$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "_$($libName)",$true
-
-$lib.Add("$($gamesPath)\$($libName)")
-$lib.Add("$($steamPath)")
-
-$lib.DefaultSaveFolder = "$($gamesPath)\$($libName)"
-
-$lib.LibraryType = "$($gamesLibraryType)"
-
-$lib.Close()
+	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
+	$lib.Add("$($libPath1)")
+	$lib.DefaultSaveFolder = "$($libPath1)"
+	$lib.Close()
+}

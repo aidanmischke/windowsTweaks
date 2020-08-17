@@ -12,7 +12,14 @@ Use *WindowsAPICodePack* and matching *...Shell* to create Windows Libraries, in
 ```string is missing the terminator: "```
 
 ### Workaround
+1. Ensure you've right clicked windows navigation pane and clicked Show Libraries
+1. Ensure your PowerShell execution policy allows running scripts. 
+i.e. Run PowerShell as Administrator
+Set-ExecutionPolicy Unrestricted
 1. In the directory with the .dll files, (shift + right click) and "Open PowerShell window here".
+Alternatively, navigate to the folder via PowerShell.
+Set-Location "C:\CreateWindowsLibraries"
+Note PowerShell can't find locations with underscores in the path.
 1. Copy contents of PowerShell file (.ps1).
 1. Paste into open PowerShell window.
 1. Press Enter to run.
