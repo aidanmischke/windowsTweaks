@@ -142,14 +142,16 @@ if ("$($userAccount)" -eq "Enny")
 	$libName = "Pictures"
 	$libType = "$($libName)"
 	$libPath1 = "F:\__Jumbo Aidan's Pictures [original] backed up to Tachi"
-	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
-	$libPath3 = "C:\Users\Public\$($libName)"
+	$libPath2 = "E:\Screenshots"
+	$libPath3 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath4 = "C:\Users\Public\$($libName)"
 
 	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
 	$lib.Add("$($libPath1)")
 	$lib.DefaultSaveFolder = "$($libPath1)"
 	$lib.Add("$($libPath2)")
 	$lib.Add("$($libPath3)")
+	$lib.Add("$($libPath4)")
 	$lib.Close()
 
 	#Custom Library
@@ -270,14 +272,16 @@ if ("$($userAccount)" -eq "tosh")
 	$libName = "Pictures"
 	$libType = "$($libName)"
 	$libPath1 = "D:\__Tosh Cargo [original] backed up to Sammy\Pictures"
-	$libPath2 = "C:\Users\$($userAccount)\$($libName)"
-	$libPath3 = "C:\Users\Public\$($libName)"
+	$libPath2 = "D:\__Tosh Cargo [original] backed up to Sammy\Screenshots"
+	$libPath3 = "C:\Users\$($userAccount)\$($libName)"
+	$libPath4 = "C:\Users\Public\$($libName)"
 
 	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
 	$lib.Add("$($libPath1)")
 	$lib.DefaultSaveFolder = "$($libPath1)"
 	$lib.Add("$($libPath2)")
 	$lib.Add("$($libPath3)")
+	$lib.Add("$($libPath4)")
 	$lib.Close()
 
 	#Custom Library
