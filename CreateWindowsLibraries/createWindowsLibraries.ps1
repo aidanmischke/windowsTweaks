@@ -235,11 +235,15 @@ if ("$($userAccount)" -eq "tosh")
 	$libType = "Generic"
 	$libPath1 = "C:\Users\$($userAccount)\Downloads"
 	$libPath2 = "D:\Soulseek Downloads"
+	$libPath3 = "D:\bt\bt complete"
+	$libPath4 = "D:\bt\bt incomplete"
 
 	$lib = New-Object Microsoft.WindowsAPICodePack.Shell.ShellLibrary –Argument "$($libNamePrefix)$($libName)",$true
 	$lib.Add("$($libPath1)")
 	$lib.DefaultSaveFolder = "$($libPath1)"
 	$lib.Add("$($libPath2)")
+	$lib.Add("$($libPath3)")
+	$lib.Add("$($libPath4)")
 	$lib.Close()
 
 	#Custom Library
