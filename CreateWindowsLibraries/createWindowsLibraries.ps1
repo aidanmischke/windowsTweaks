@@ -28,6 +28,12 @@ $userAccount = "Enny"
 
 $libNamePrefix = "_"
 
+#Delete default windows libraries
+del "C:\Users\Enny\AppData\Roaming\Microsoft\Windows\Libraries\Documents.library-ms"
+del "C:\Users\Enny\AppData\Roaming\Microsoft\Windows\Libraries\Music.library-ms"
+del "C:\Users\Enny\AppData\Roaming\Microsoft\Windows\Libraries\Pictures.library-ms"
+del "C:\Users\Enny\AppData\Roaming\Microsoft\Windows\Libraries\Videos.library-ms"
+
 if ("$($userAccount)" -eq "Enny")
 {
 	#Custom Library
